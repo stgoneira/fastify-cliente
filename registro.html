@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario Registro</title>
+
+    <!-- 
+    <script src="mi-archivo-externo.js" defer></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const formulario = document.querySelector("form");
+            formulario.addEventListener("submit", (submitEvent) => {
+                // codigo manejo evento ...
+            });
+        });
+    </script>
+    -->
+
+</head>
+<body>
+    <h1>Form Registro</h1>
+
+    <form method="post" action="registro.html">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" />
+
+        <label for="contrasena">Contraseña</label>
+        <input type="password" name="contrasena" id="password" />
+
+        <button type="submit">Registrar</button>
+    </form>
+
+    <script>
+        const formulario = document.querySelector("form");
+        formulario.addEventListener("submit", async (eventoSubmit) => { 
+            eventoSubmit.preventDefault();
+            // currentTarget: es lo mismo que la constante "form" que está arriba
+            // representa el elemento HTML que disparó el Evento 
+            const formElement   = eventoSubmit.currentTarget; 
+            const formData      = new FormData( formElement );
+            // con formData.get( nombreCampoForm )
+            const email         = formData.get("email");
+            const contrasena    = formData.get("contrasena");
+            const nuevoUsuario = {
+                email,
+                contrasena
+            };
+
+            const baseUrl   = "http://localhost:3000";
+            const url       = baseUrl + "/registro";
+            const fetchConfig = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify( nuevoUsuario )
+            };
+
+            try {
+                const respuesta     = await fetch(url, fetchConfig);
+                // si la respuesta no es OK 
+                if( !respuesta.ok ) {
+                   // gestionar error o mensajes recibidos 
+                   console.error("La respuesta no está OK");
+                   return;
+                } 
+
+                // en caso de exito 
+                const objetoJson    = await respuesta.json(); 
+                console.dir( objetoJson);
+
+            } catch (error) {
+                // gestion errores 
+                console.error( error.code );
+                console.error( error.message );
+            }
+        });        
+    </script>
+</body>
+</html>
