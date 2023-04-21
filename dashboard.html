@@ -21,13 +21,14 @@
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authentication': 'Bearer '+token
+                'Authorization': 'Bearer '+token
             },
             //body: '{}'
         }).then( respuesta => {
             if( !respuesta.ok ) {
                 throw new Error("Token no válido");
             }
+            respuesta.json();
         }).catch(error => {
             // window.location = "login.html"; 
         });
