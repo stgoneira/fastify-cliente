@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function CategoriaForm() {
+export default function CategoriaForm({categorias, setCategorias}) {
 
     const [nombre, setNombre]           = useState('');
     const [descripcion, setDescripcion] = useState('');
@@ -28,6 +28,12 @@ export default function CategoriaForm() {
 
             const categoriaGuardada = await respuesta.json();
             console.dir( categoriaGuardada );
+
+            // actualiza la variable de estado 
+            // que contiene las categoría que muestra la tabla 
+            setCategorias(
+                [...categorias, categoriaGuardada]
+            );
         } catch (error) {
             console.error( error );
         }

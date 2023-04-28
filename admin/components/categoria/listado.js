@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function CategoriaListado() {
-    const [categorias, setCategorias] = useState([]);
-
+export default function CategoriaListado({categorias, setCategorias}) {
     const cargarDatos = async () => {
         try {
             const baseUrl   = 'http://localhost:3000';
